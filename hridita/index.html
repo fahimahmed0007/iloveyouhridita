@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Universe</title>
+    <style>
+        /* --- CUTE DARK THEME --- */
+        body {
+            background-color: #050505;
+            color: #FFB7B2; /* Pastel Pink Text */
+            font-family: 'Courier New', Courier, monospace; /* Typewriter style */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden; /* No scrolling */
+            text-align: center;
+        }
+
+        /* Container Style */
+        .container {
+            width: 85%;
+            max-width: 500px;
+            padding: 30px;
+            background: rgba(10, 10, 10, 0.95);
+            border: 1px solid #D4AF37; /* Gold Border */
+            border-radius: 20px;
+            box-shadow: 0 0 25px rgba(255, 105, 180, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Text Styles */
+        p.shayari {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #D4AF37; /* Gold Text */
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: #FF69B4; /* Hot Pink */
+            font-weight: bold;
+            font-size: 1.6rem;
+            display: block;
+            margin-top: 25px;
+            text-shadow: 0 0 10px #FF69B4;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- BUTTON FIX --- */
+        .btn-group {
+            margin-top: 40px;
+            width: 100%;
+            display: flex;       /* Aligns them side-by-side */
+            justify-content: center; 
+            align-items: center;
+            position: relative;
+            min-height: 70px;    /* Reserves space */
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: sans-serif;
+            transition: transform 0.2s;
+            white-space: nowrap; /* Prevents text squishing */
+        }
+
+        #yesBtn {
+            background-color: #FF69B4;
+            color: #000;
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+            margin-right: 20px; /* Pushes the No button away */
+            z-index: 100; /* Ensures Yes is always on top */
+        }
+
+        #noBtn {
+            background: transparent;
+            color: #888;
+            border: 1px solid #555;
+            position: relative; /* Starts in normal flow */
+            margin-left: 20px; /* Pushes away from Yes button */
+            z-index: 1;
+        }
+
+        /* Success Page */
+        #success-page {
+            display: none;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .music-note {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #666;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* Background Floating Hearts */
+        .bg-hearts {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .heart-particle {
+            position: absolute;
+            color: rgba(255, 105, 180, 0.3);
+            animation: float 10s infinite linear;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-10vh); opacity: 0; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="bg-hearts" id="hearts"></div>
+
+    <audio id="bgMusic">
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container" id="proposal-page">
+        <div class="shayari">
+            <p>Meri du’ayein tumhara hi zikr karti hain, jab paas nahi hoti tum,<br>
+            Meri du’ayein odh le tumhe... chahe kitni bhi door ho tum.</p>
+            
+            <p>Meri rooh ke bohot paas, du’aon mein ek mahal banaya hai tumhare liye,<br>
+            Mera dil bas itna poochta hai tumse...</p>
+            
+            <span class="highlight">Kya rahoge wahan tum?</span>
+        </div>
+
+        <div class="btn-group">
+            <button id="yesBtn">Haan jii 🖤</button>
+            <button id="noBtn">Nahiiiii 😭😭</button>
+        </div>
+    </div>
+
+    <div class="container" id="success-page">
+        <div class="shayari">
+            <p style="color: #FFB7B2;">Aapki nigah ki wo besaakhta chahat, ab humein pareshaan karti hai,</p>
+            <p style="color: #FFB7B2;">Aapki zulfon ki mehek, kaynaat ke har itr se behtar lagti hai. ✨</p>
+            
+            <p style="color: #D4AF37;">Dil dhoondta hai panaah sirf aapke saaye mein har ghadi,</p>
+            <p style="color: #D4AF37;">Kyunki meri har saans ab aapki mohabbat ki mohtaaj lagti hai.</p>
+            
+            <h1 style="font-size: 3rem;">❤️</h1>
+            
+            <div class="music-note" onclick="document.getElementById('bgMusic').play()">
+                🎵 Tap here if music doesn't play
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Setup Background Hearts
+        const heartsContainer = document.getElementById('hearts');
+        for(let i=0; i<20; i++){
+            let h = document.createElement('div');
+            h.className = 'heart-particle';
+            h.innerHTML = '❤';
+            h.style.left = Math.random()*100 + '%';
+            h.style.fontSize = (Math.random()*20 + 10) + 'px';
+            h.style.animationDuration = (Math.random()*5 + 5) + 's';
+            heartsContainer.appendChild(h);
+        }
+
+        // 2. Button Logic
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const audio = document.getElementById('bgMusic');
+
+        // Function to move the No button
+        const runAway = () => {
+            // Get window dimensions
+            const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+
+            // Switch to fixed position to allow free movement
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            noBtn.style.margin = '0'; // Remove margin so it doesn't mess up calculations
+        };
+
+        // Triggers for "No" button
+        noBtn.addEventListener('mouseover', runAway);
+        noBtn.addEventListener('click', runAway);
+        noBtn.addEventListener('touchstart', runAway); // For mobile touch
+
+        // Trigger for "Yes" button
+        yesBtn.addEventListener('click', () => {
+            document.getElementById('proposal-page').style.display = 'none';
+            document.getElementById('success-page').style.display = 'block';
+            
+            // Try to play audio
+            audio.play().catch(e => console.log("Audio requires interaction"));
+        });
+    </script>
+</body>
+</html>
