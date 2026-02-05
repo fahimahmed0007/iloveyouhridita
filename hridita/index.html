@@ -5,18 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For My Universe</title>
     <style>
-        /* --- CUTE DARK THEME --- */
+        /* --- CAT BACKGROUND THEME --- */
         body {
-            background-color: #050505;
-            color: #FFB7B2; /* Pastel Pink Text */
-            font-family: 'Courier New', Courier, monospace; /* Typewriter style */
+            /* This sets your CAT GIF as the full screen background */
+            background: url('animation.gif') no-repeat center center fixed; 
+            background-size: cover; /* stretches it to fill screen */
+            
+            color: #FFB7B2;
+            font-family: 'Courier New', Courier, monospace;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            overflow: hidden; /* No scrolling */
+            overflow: hidden;
             text-align: center;
+        }
+
+        /* This creates a dark tint so you can read the text over the cat */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7); /* 70% darkness */
+            z-index: 0;
         }
 
         /* Container Style */
@@ -24,42 +36,45 @@
             width: 85%;
             max-width: 500px;
             padding: 30px;
-            background: rgba(10, 10, 10, 0.95);
-            border: 1px solid #D4AF37; /* Gold Border */
+            /* Glassmorphism effect */
+            background: rgba(20, 20, 20, 0.6); 
+            border: 2px solid #FF69B4;
             border-radius: 20px;
-            box-shadow: 0 0 25px rgba(255, 105, 180, 0.2);
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.5);
             position: relative;
-            z-index: 10;
+            z-index: 10; /* sits on top of overlay */
+            backdrop-filter: blur(5px); /* blurs the cat behind the text slightly */
         }
 
         /* Text Styles */
         p.shayari {
-            font-size: 1rem;
+            font-size: 1.1rem;
             line-height: 1.6;
-            color: #D4AF37; /* Gold Text */
+            color: #FFE4E1; /* Brighter white/pink for readability */
             margin-bottom: 20px;
+            text-shadow: 2px 2px 4px #000; /* Black shadow for readability */
+            font-weight: bold;
         }
 
         .highlight {
-            color: #FF69B4; /* Hot Pink */
+            color: #FF69B4;
             font-weight: bold;
             font-size: 1.6rem;
             display: block;
             margin-top: 25px;
-            text-shadow: 0 0 10px #FF69B4;
+            text-shadow: 0 0 10px #FF69B4, 2px 2px 0 #000;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
-        /* --- BUTTON FIX --- */
+        /* --- BUTTONS --- */
         .btn-group {
-            margin-top: 40px;
+            margin-top: 30px;
             width: 100%;
-            display: flex;       /* Aligns them side-by-side */
+            display: flex;
             justify-content: center; 
             align-items: center;
-            position: relative;
-            min-height: 70px;    /* Reserves space */
+            gap: 40px; 
+            min-height: 60px;
         }
 
         button {
@@ -70,24 +85,23 @@
             cursor: pointer;
             font-weight: bold;
             font-family: sans-serif;
+            white-space: nowrap;
             transition: transform 0.2s;
-            white-space: nowrap; /* Prevents text squishing */
         }
 
         #yesBtn {
             background-color: #FF69B4;
             color: #000;
-            box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
-            margin-right: 20px; /* Pushes the No button away */
-            z-index: 100; /* Ensures Yes is always on top */
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.8);
+            position: relative; 
+            z-index: 100;
         }
 
         #noBtn {
-            background: transparent;
-            color: #888;
-            border: 1px solid #555;
-            position: relative; /* Starts in normal flow */
-            margin-left: 20px; /* Pushes away from Yes button */
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            border: 1px solid #FF69B4;
+            position: relative;
             z-index: 1;
         }
 
@@ -104,35 +118,18 @@
 
         .music-note {
             margin-top: 20px;
-            font-size: 0.8rem;
-            color: #666;
+            font-size: 0.9rem;
+            color: #fff;
             cursor: pointer;
             text-decoration: underline;
-        }
-
-        /* Background Floating Hearts */
-        .bg-hearts {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-        .heart-particle {
-            position: absolute;
-            color: rgba(255, 105, 180, 0.3);
-            animation: float 10s infinite linear;
-        }
-        @keyframes float {
-            0% { transform: translateY(100vh); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateY(-10vh); opacity: 0; }
+            text-shadow: 1px 1px 2px #000;
         }
 
     </style>
 </head>
 <body>
 
-    <div class="bg-hearts" id="hearts"></div>
+    <div class="overlay"></div>
 
     <audio id="bgMusic">
         <source src="song.mp3" type="audio/mpeg">
@@ -157,11 +154,11 @@
 
     <div class="container" id="success-page">
         <div class="shayari">
-            <p style="color: #FFB7B2;">Aapki nigah ki wo besaakhta chahat, ab humein pareshaan karti hai,</p>
-            <p style="color: #FFB7B2;">Aapki zulfon ki mehek, kaynaat ke har itr se behtar lagti hai. ✨</p>
+            <p>Aapki nigah ki wo besaakhta chahat, ab humein pareshaan karti hai,</p>
+            <p>Aapki zulfon ki mehek, kaynaat ke har itr se behtar lagti hai. ✨</p>
             
-            <p style="color: #D4AF37;">Dil dhoondta hai panaah sirf aapke saaye mein har ghadi,</p>
-            <p style="color: #D4AF37;">Kyunki meri har saans ab aapki mohabbat ki mohtaaj lagti hai.</p>
+            <p>Dil dhoondta hai panaah sirf aapke saaye mein har ghadi,</p>
+            <p>Kyunki meri har saans ab aapki mohabbat ki mohtaaj lagti hai.</p>
             
             <h1 style="font-size: 3rem;">❤️</h1>
             
@@ -172,50 +169,29 @@
     </div>
 
     <script>
-        // 1. Setup Background Hearts
-        const heartsContainer = document.getElementById('hearts');
-        for(let i=0; i<20; i++){
-            let h = document.createElement('div');
-            h.className = 'heart-particle';
-            h.innerHTML = '❤';
-            h.style.left = Math.random()*100 + '%';
-            h.style.fontSize = (Math.random()*20 + 10) + 'px';
-            h.style.animationDuration = (Math.random()*5 + 5) + 's';
-            heartsContainer.appendChild(h);
-        }
-
-        // 2. Button Logic
+        // Button Logic
         const noBtn = document.getElementById('noBtn');
         const yesBtn = document.getElementById('yesBtn');
         const audio = document.getElementById('bgMusic');
 
-        // Function to move the No button
         const runAway = () => {
-            // Get window dimensions
-            const maxX = window.innerWidth - noBtn.offsetWidth - 20;
-            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
-            
+            const maxX = window.innerWidth - noBtn.offsetWidth - 50;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 50;
             const randomX = Math.random() * maxX;
             const randomY = Math.random() * maxY;
 
-            // Switch to fixed position to allow free movement
-            noBtn.style.position = 'fixed';
+            noBtn.style.position = 'fixed'; 
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
-            noBtn.style.margin = '0'; // Remove margin so it doesn't mess up calculations
         };
 
-        // Triggers for "No" button
         noBtn.addEventListener('mouseover', runAway);
         noBtn.addEventListener('click', runAway);
-        noBtn.addEventListener('touchstart', runAway); // For mobile touch
+        noBtn.addEventListener('touchstart', runAway);
 
-        // Trigger for "Yes" button
         yesBtn.addEventListener('click', () => {
             document.getElementById('proposal-page').style.display = 'none';
             document.getElementById('success-page').style.display = 'block';
-            
-            // Try to play audio
             audio.play().catch(e => console.log("Audio requires interaction"));
         });
     </script>
