@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For My Universe</title>
     <style>
-        /* --- CAT BACKGROUND THEME --- */
+        /* --- DYNAMIC THEME --- */
         body {
-            /* This sets your CAT GIF as the full screen background */
-            background: url('animation.gif') no-repeat center center fixed; 
-            background-size: cover; /* stretches it to fill screen */
+            /* PAGE 1: Starts with Hamster Pleading */
+            background: url('hamster-pleading.gif') no-repeat center center fixed; 
+            background-size: cover;
             
             color: #FFB7B2;
             font-family: 'Courier New', Courier, monospace;
@@ -20,14 +20,15 @@
             margin: 0;
             overflow: hidden;
             text-align: center;
+            transition: background 0.5s ease; /* Smooth switch between GIFs */
         }
 
-        /* This creates a dark tint so you can read the text over the cat */
+        /* Dark overlay to make text readable over the GIFs */
         .overlay {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7); /* 70% darkness */
+            background: rgba(0, 0, 0, 0.6); /* 60% Dark tint */
             z-index: 0;
         }
 
@@ -36,23 +37,22 @@
             width: 85%;
             max-width: 500px;
             padding: 30px;
-            /* Glassmorphism effect */
-            background: rgba(20, 20, 20, 0.6); 
+            background: rgba(20, 20, 20, 0.7); /* Glass effect */
             border: 2px solid #FF69B4;
             border-radius: 20px;
             box-shadow: 0 0 30px rgba(255, 105, 180, 0.5);
             position: relative;
-            z-index: 10; /* sits on top of overlay */
-            backdrop-filter: blur(5px); /* blurs the cat behind the text slightly */
+            z-index: 10;
+            backdrop-filter: blur(3px);
         }
 
         /* Text Styles */
         p.shayari {
             font-size: 1.1rem;
             line-height: 1.6;
-            color: #FFE4E1; /* Brighter white/pink for readability */
+            color: #FFE4E1;
             margin-bottom: 20px;
-            text-shadow: 2px 2px 4px #000; /* Black shadow for readability */
+            text-shadow: 2px 2px 4px #000;
             font-weight: bold;
         }
 
@@ -66,7 +66,7 @@
             text-transform: uppercase;
         }
 
-        /* --- BUTTONS --- */
+        /* Buttons */
         .btn-group {
             margin-top: 30px;
             width: 100%;
@@ -169,11 +169,11 @@
     </div>
 
     <script>
-        // Button Logic
         const noBtn = document.getElementById('noBtn');
         const yesBtn = document.getElementById('yesBtn');
         const audio = document.getElementById('bgMusic');
 
+        // Logic to make "No" run away
         const runAway = () => {
             const maxX = window.innerWidth - noBtn.offsetWidth - 50;
             const maxY = window.innerHeight - noBtn.offsetHeight - 50;
@@ -189,9 +189,16 @@
         noBtn.addEventListener('click', runAway);
         noBtn.addEventListener('touchstart', runAway);
 
+        // Logic for "Yes" - SWITCH GIF HERE
         yesBtn.addEventListener('click', () => {
+            // 1. Hide Question, Show Success
             document.getElementById('proposal-page').style.display = 'none';
             document.getElementById('success-page').style.display = 'block';
+
+            // 2. SWITCH BACKGROUND TO CAT GIF
+            document.body.style.backgroundImage = "url('animation.gif')"; 
+            
+            // 3. Play Music
             audio.play().catch(e => console.log("Audio requires interaction"));
         });
     </script>
